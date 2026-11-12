@@ -136,15 +136,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Form Output Handling
             if (isValid) {
-                formStatus.style.color = '#3b82f6';
-                formStatus.textContent = 'Sending message...';
+                const mailto = new URL('mailto:wangarifaithp@gmail.com');
+                mailto.searchParams.set('subject', subject.value.trim());
+                mailto.searchParams.set(
+                    'body',
+                    `Name: ${name.value.trim()}\nEmail: ${email.value.trim()}\n\n${message.value.trim()}`
+                );
 
-                // Simulate front-end submission success
-                setTimeout(() => {
-                    formStatus.style.color = '#22c55e';
-                    formStatus.textContent = 'Thank you! Your message has been sent successfully.';
-                    contactForm.reset();
-                }, 1200);
+                formStatus.style.color = '#22c55e';
+                formStatus.textContent = 'Opening your email app to send this message...';
+                window.location.href = mailto.toString();
             } else {
                 formStatus.style.color = '#ef4444';
                 formStatus.textContent = 'Please fix the errors above and try again.';
